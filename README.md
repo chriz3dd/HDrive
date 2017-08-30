@@ -11,7 +11,9 @@ HDrive myDrive;     //your global hdrive variable
 void init(){
 
   AutoResetEvent resetEvent = new AutoResetEvent(false);              //creat autoreset event
+  
   myDrive = new HDrive(IPAddress.Parse("192.168.1.102"), NewDataFromMotor, 1000, resetEvent, 1001);  //creat drive
+  
   resetEvent-.WaitOne();          //Wait until drive is connected
   
 }
