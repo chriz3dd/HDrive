@@ -4,6 +4,6 @@
     {
         void Open();
         void Close();
-        bool Write(string str, bool text = false);
+        bool Write(string str);
     }
 }

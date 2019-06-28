@@ -10,11 +10,11 @@ namespace WDriveConnection
     {
         private readonly WDriveInterpreter _interpreter;
         private readonly IPAddress _ipAdress;
-
         private readonly int _udpPort;
-        private bool _searchClients = true;
+
         private UdpClient _udpSocket;
         private Thread _recieverThread;
+        private bool _searchClients = true;
 
         /// <summary>
         ///     constructor
@@ -34,7 +34,7 @@ namespace WDriveConnection
         public void Open()
         {
             _recieverThread = new Thread(StartServer);
-            _recieverThread.Name = "WDrive Thread: " + _udpPort;
+            _recieverThread.Name = "HDrive UDP thread on port: " + _udpPort;
             _recieverThread.Start();
         }
 
@@ -53,7 +53,7 @@ namespace WDriveConnection
         ///     waits until reader has recieved answer ticket
         /// </summary>
         /// <returns></returns>
-        public bool Write(string str, bool text = false)
+        public bool Write(string str)
         {
             return false;
         }
@@ -61,7 +61,7 @@ namespace WDriveConnection
         public void StartServer()
         {
             _udpSocket = new UdpClient(new IPEndPoint(IPAddress.Any, _udpPort));
-            Console.WriteLine("UDP - Begin Recieve on Port: " + _udpPort + " on: " + _ipAdress);
+            Console.WriteLine("UDP - Begin receieve on port: " + _udpPort + " on: " + _ipAdress);
 
             while (_searchClients)
             {
