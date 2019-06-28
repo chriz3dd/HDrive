@@ -6,22 +6,15 @@ Therefore the right interface in the HDrive GUI has to be set up.
 
 Example:
 
-HDrive myDrive;     //your global hdrive variable
+HDrive myDrive = new HDrive(0, IPAddress.Parse("192.168.1.102"));     //your global hdrive variable
 
 void init(){
 
-  AutoResetEvent resetEvent = new AutoResetEvent(false);              //creat autoreset event
-  
-  myDrive = new HDrive(IPAddress.Parse("192.168.1.102"), NewDataFromMotor, 1000, resetEvent, 1001);  //creat drive
-  
-  resetEvent-.WaitOne();          //Wait until drive is connected
-  
+  myDrive.Connect(NewDataFromMotorCallback, 1000);  // Connecto to HDrive
 }
 
 
-void NewDataFromMotor( int motorNumber ) //Hdrive callback is getting trigggered as soon as there is new Data recieved
+void NewDataFromMotorCallback( int motorNumber ) // HDrive callback is getting trigggered as soon as there is new Data recieved
 {
-
-  int x = myDrive.Position;
-  
+  int x = myDrive.Position;  
 }
