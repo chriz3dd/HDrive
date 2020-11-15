@@ -1,20 +1,39 @@
+
 # HDrive
-This is the Software repository to handle a Henschel-Robotics "HDrive". Including a C# Driver.
 
-The Driver is able to communicate over TCP with the HDrive. It is also possible to chose in between TCP or UDP for receiving messages from the motor. 
-Therefore the right interface in the HDrive GUI has to be set up.
+This is the software repository to handle a Henschel-Robotics "HDrive". 
 
-Example:
+The driver is able to communicate over TCP or UDP with the HDrive. In any case the drive only accept drive commands over TCP.  It is also possible to activate UDP protocol for receiving messages from the motor. Therefore the right interface in the HDrive GUI has to be set up.  
 
-HDrive myDrive = new HDrive(0, IPAddress.Parse("192.168.1.102"));     //your global hdrive variable
+**Example:**
+```C#
 
-void init(){
+// Global HDrive variable
+// id: any number to identify your drive if you have multiple
+int id = 0;
+HDrive myDrive = new HDrive(id, IPAddress.Parse("192.168.1.102")); 
 
-  myDrive.Connect(NewDataFromMotorCallback, 1000);  // Connecto to HDrive
-}
-
-
-void NewDataFromMotorCallback( int motorNumber ) // HDrive callback is getting trigggered as soon as there is new Data recieved
+void init()
 {
-  int x = myDrive.Position;  
+	// Connecto to HDrive
+	myDrive.Connect(NewDataFromMotorCallback, 1000); 
 }
+
+// HDrive callback is getting trigggered as soon as there is new Data recieved
+void NewDataFromMotorCallback( int motorNumber )
+{
+	int x = myDrive.Position;
+}
+```
+If the motor is configured to use UDP to send it's data, then the following initialization can be used:
+```C#
+int id = 0;
+// Specifie the telegramm what you also have configured in the WebGUI
+HDriveTicket telegram = HdriveTicket.BinaryTicket; 
+
+// The UDP-Port can be setup in the WebGUI
+int UDPPort = 1001;  
+
+HDrive myDrive = new HDrive(id, IPAddress.Parse("192.168.1.102"), telegram , UDPPort); 
+
+```
