@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <appSettings>
+        <add key="ConfigVersion" value="1" />
+        <add key="hostIP" value="192.168.1.150" />
+        <add key="defaultFolderBootloader" value="C:\," />
+        <add key="defaultFolderWebGUI" value="C:\" />
+        <add key="defaultFolderFW" value="" />
+        <add key="PingTimeout" value="2000" />
+        <add key="PingSequenceTimeout" value="5" />
+        <add key="getMotorTimeout" value="300" />
+        <add key="MotorTCPPort" value="1000" />
+        <add key="BaseIP" value="192.168.1." />
+        <add key="StartIP" value="50" />
+        <add key="StopIP" value="105" />
+    </appSettings>
+</configuration>

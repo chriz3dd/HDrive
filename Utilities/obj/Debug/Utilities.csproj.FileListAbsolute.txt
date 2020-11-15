@@ -1,0 +1,12 @@
+D:\work\hdrive_csharp_projects\Utilities\bin\Debug\Utilities.dll
+D:\work\hdrive_csharp_projects\Utilities\bin\Debug\Utilities.pdb
+D:\work\hdrive_csharp_projects\Utilities\obj\Debug\Utilities.csproj.CoreCompileInputs.cache
+D:\work\hdrive_csharp_projects\Utilities\obj\Debug\Utilities.dll
+D:\work\hdrive_csharp_projects\Utilities\obj\Debug\Utilities.pdb
+D:\work\hdrive_csharp_projects\Utilities\obj\Debug\Utilities.csprojAssemblyReference.cache
+D:\work\gitHub2\Utilities\bin\Debug\Utilities.dll
+D:\work\gitHub2\Utilities\bin\Debug\Utilities.pdb
+D:\work\gitHub2\Utilities\obj\Debug\Utilities.csprojAssemblyReference.cache
+D:\work\gitHub2\Utilities\obj\Debug\Utilities.csproj.CoreCompileInputs.cache
+D:\work\gitHub2\Utilities\obj\Debug\Utilities.dll
+D:\work\gitHub2\Utilities\obj\Debug\Utilities.pdb
