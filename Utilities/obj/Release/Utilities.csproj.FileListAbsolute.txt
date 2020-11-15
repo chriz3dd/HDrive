@@ -1,6 +1,0 @@
-D:\work\hdrive_csharp_projects\Utilities\bin\Release\Utilities.dll
-D:\work\hdrive_csharp_projects\Utilities\bin\Release\Utilities.pdb
-D:\work\hdrive_csharp_projects\Utilities\obj\Release\Utilities.csproj.CoreCompileInputs.cache
-D:\work\hdrive_csharp_projects\Utilities\obj\Release\Utilities.dll
-D:\work\hdrive_csharp_projects\Utilities\obj\Release\Utilities.pdb
-D:\work\hdrive_csharp_projects\Utilities\obj\Release\Utilities.csprojAssemblyReference.cache
