@@ -9,7 +9,7 @@ namespace HDriveDiscovery
     {
         public DataGridViewProgressColumn()
         {
-            CellTemplate = new DataGridViewProgressCell();
+            CellTemplate = new DataGridViewProgressCell(); 
         }
     }
 }

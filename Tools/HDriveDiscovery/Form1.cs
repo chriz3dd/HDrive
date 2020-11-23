@@ -12,8 +12,7 @@ using Visualization;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using HDrive;
-using static Utilities.NetworkTools;
-using static HDrive.HDriveInformation;
+using Utilities;
 
 namespace HDriveDiscovery
 {
@@ -29,10 +28,10 @@ namespace HDriveDiscovery
         readonly FindHDrives _hdriveSearcher;
 
         // The result of the found HDrives in the network
-        readonly List<HDriveData> _foundHdrives;
+        readonly List<HDriveInformation.HDriveData> _foundHdrives;
 
         // List of HDrives that are currently updating
-        readonly List<HDriveData> _updatedHDrives;
+        readonly List<HDriveInformation.HDriveData> _updatedHDrives;
 
         int _radialProgressbar1;
         int _radialProgressbar2;
@@ -49,16 +48,17 @@ namespace HDriveDiscovery
         readonly object _locker = new object();
         readonly List<Task> _updateTasks = new List<Task>();
         bool _updateStarted;
+        
 
-        public Form1()
+    public Form1()
         {
             InitializeComponent();
 
-            _updatedHDrives = new List<HDriveData>();
+            _updatedHDrives = new List<HDriveInformation.HDriveData>();
 
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
 
-            _foundHdrives = new List<HDriveData>();
+            _foundHdrives = new List<HDriveInformation.HDriveData>();
             _storedData = new ConfigFile("config.xml");
 
             dataGridView.RowHeadersWidth = 4; // the left row header size.
@@ -132,7 +132,7 @@ namespace HDriveDiscovery
             _hdriveSearcher.StartPingSweep();
         }
 
-        private void NewHDriveFound(HDriveData data)
+        private void NewHDriveFound(HDriveInformation.HDriveData data)
         {
             _gridViewVisibility = true;
             _foundHdrives.Add(data);
@@ -175,7 +175,7 @@ namespace HDriveDiscovery
             {
                 dataGridView.Rows.Clear();
 
-                foreach (HDriveData e in _foundHdrives)
+                foreach (HDriveInformation.HDriveData e in _foundHdrives)
                 {
                     bool error = false;
 
@@ -184,7 +184,7 @@ namespace HDriveDiscovery
                     {
                         try
                         {
-                            string errorTxt = new TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + e.Ip.ToString() + "/getData.cgi?txt");
+                            string errorTxt = new NetworkTools.TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + e.Ip.ToString() + "/getData.cgi?txt");
                             if (errorTxt.Contains("crash") || errorTxt.Contains("not to work") || errorTxt.Contains("reset"))
                                 error = true;
                         }
@@ -207,7 +207,7 @@ namespace HDriveDiscovery
                 _oldCountOfHDrives = _foundHdrives.Count;
             }
 
-            foreach (HDriveData dt in _updatedHDrives)
+            foreach (HDriveInformation.HDriveData dt in _updatedHDrives)
             {
                 int rowIndex = GetRowIndexFromIp(dt.Ip);
                 if (rowIndex >= 0)
@@ -358,7 +358,7 @@ namespace HDriveDiscovery
             int count = arrayRecordsToSend.Count;
             int index = 0;
 
-            HDriveData currentDrive = new HDriveData(motorIP, "", 0, 0, 0, 0, 0, "");
+            HDriveInformation.HDriveData currentDrive = new HDriveInformation.HDriveData(motorIP, "", 0, 0, 0, 0, 0, "");
             _updatedHDrives.Add(currentDrive);
 
             foreach (byte[] t in arrayRecordsToSend)
@@ -419,7 +419,7 @@ namespace HDriveDiscovery
             const int headerLength = 4;
             int length = fileByteArray.Count();
 
-            string output = new TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + motorIP + "/getData.cgi?clear");
+            string output = new NetworkTools.TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + motorIP + "/getData.cgi?clear");
 
             byte[] fileByteArrayWithHeader = new byte[length + headerLength]; // reserve 1MB
 
@@ -468,10 +468,7 @@ namespace HDriveDiscovery
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            var radialProgressbar = new List<int>();
-            radialProgressbar.Add(_radialProgressbar1);
-            radialProgressbar.Add(_radialProgressbar2);
-            radialProgressbar.Add(0);
+  
 
             int pingTimeout = int.Parse(_storedData.getParameter("PingTimeout"));
             int StartIP = int.Parse(_storedData.getParameter("StartIP"));
@@ -545,8 +542,8 @@ namespace HDriveDiscovery
                     if (fileByteArray.Length > 0)
                     {
                         int.TryParse(FileVersion, out int fileVersion);
-                        List<HDriveData> templist = new List<HDriveData>();
-                        foreach (HDriveData hd in _foundHdrives)
+                        List<HDriveInformation.HDriveData> templist = new List<HDriveInformation.HDriveData>();
+                        foreach (HDriveInformation.HDriveData hd in _foundHdrives)
                         {
                             if ((string)dataGridView.Rows[e.RowIndex].Cells[0].Value == hd.Ip)
                                 templist.Add(hd);
@@ -951,7 +948,7 @@ namespace HDriveDiscovery
 
             if (fileByteArray.Length > 0)
             {
-                foreach (HDriveData hd in _foundHdrives)
+                foreach (HDriveInformation.HDriveData hd in _foundHdrives)
                 {
                     Double.TryParse(hd.GuiVersion.Replace('.', ','), out double GUIVersionLocal);
                     var byteArray = ConfigureDriveForWebPageUploadAndGenerateArrayBuffer(hd.FwVersion, hd.Ip, fileByteArray);
@@ -1035,7 +1032,7 @@ namespace HDriveDiscovery
 
         }
 
-        private void updateFW(byte[] fileByteArray, int fileVersion, List<HDriveData> hdrives)
+        private void updateFW(byte[] fileByteArray, int fileVersion, List<HDriveInformation.HDriveData> hdrives)
         {
             // Seperate FWA and FWB
             // Reader FW header A
@@ -1055,7 +1052,7 @@ namespace HDriveDiscovery
             byte[] fileByteArrayFWA = fileByteArray.Take(sizeA + 16).ToArray();
             byte[] fileByteArrayFWB = fileByteArray.Skip(sizeA + 16).Take(sizeA + 16 + sizeB + 16).ToArray();
 
-            foreach (HDriveData hd in hdrives)
+            foreach (HDriveInformation.HDriveData hd in hdrives)
             {
                 // Only update if update is necessary
                 if (hd.FwVersion != fileVersion)
@@ -1068,7 +1065,7 @@ namespace HDriveDiscovery
                     else if (hd.AppId == 2 | hd.AppId == 0 | hd.AppId == -1)
                         byteArray = ComposeArrayBufferToSend(hd.FwVersion, 0, fileByteArrayFWA);
 
-                    Task prepairDrive = new Task(() => new TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + hd.Ip + "/getData.cgi?fdel"));
+                    Task prepairDrive = new Task(() => new NetworkTools.TimedWebClient { Timeout = WebRequestTimeoutMs }.DownloadString("http://" + hd.Ip + "/getData.cgi?fdel"));
                     Task updater = new Task(() => UploadData(byteArray, hd.Ip, "", "fir"));
 
                     // The sequencer is working bottom up, therfore push first update task then prepair task
@@ -1087,6 +1084,7 @@ namespace HDriveDiscovery
         {
             lock (_locker)
             {
+                onlyShow102.Checked = false;
                 _oldCountOfHDrives = 0;
                 _foundHdrives.Clear();
                 dataGridView.Rows.Clear();
@@ -1100,6 +1098,7 @@ namespace HDriveDiscovery
 
         private void btn_detectHDrives(object sender, EventArgs e)
         {
+            onlyShow102.Checked = false;
             _oldCountOfHDrives = 0;
             _foundHdrives.Clear();
             _buttonVisibility = false;
@@ -1114,5 +1113,41 @@ namespace HDriveDiscovery
 
         #endregion
 
+        List<DataGridViewRow> hiddenRows = null;
+
+        private void onlyShow102_CheckedChanged(object sender, EventArgs e)
+        {
+            if (onlyShow102.Checked)
+            {
+                hiddenRows = new List<DataGridViewRow>();
+                DataGridViewRow rowWith102 = new DataGridViewRow();
+
+                // Sort out all IP's without "102" at the last IP segment
+                foreach (DataGridViewRow c in dataGridView.Rows)
+                {
+                    if (c.Cells[0].Value == null)
+                        break;
+
+                    var ip = c.Cells[0].Value.ToString().Split('.');
+                    if (ip.Length == 4 && ip[3] != "102")
+                    {
+                        hiddenRows.Add(c);
+                    }
+                    else
+                    {
+                        rowWith102 = c;
+                    }
+                }
+
+                // remove them all
+                dataGridView.Rows.Clear();
+                dataGridView.Rows.Add(rowWith102);
+            }
+
+            else
+            {
+                dataGridView.Rows.AddRange(hiddenRows.ToArray());
+            }
+        }
     };
 }

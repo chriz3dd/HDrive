@@ -38,6 +38,7 @@ namespace HDriveDiscovery
             this.debugConsole = new System.Windows.Forms.TextBox();
             this.btn_clearLog = new System.Windows.Forms.Button();
             this.btn_refreshHDriveData = new System.Windows.Forms.Button();
+            this.onlyShow102 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,13 +61,13 @@ namespace HDriveDiscovery
             this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(16, 12);
+            this.dataGridView.Location = new System.Drawing.Point(16, 46);
             this.dataGridView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 62;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1482, 730);
+            this.dataGridView.Size = new System.Drawing.Size(1502, 696);
             this.dataGridView.TabIndex = 5;
             this.dataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellClick);
             this.dataGridView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_MouseClick);
@@ -78,7 +79,7 @@ namespace HDriveDiscovery
             this.btn_FW_Update.Name = "btn_FW_Update";
             this.btn_FW_Update.Size = new System.Drawing.Size(180, 43);
             this.btn_FW_Update.TabIndex = 6;
-            this.btn_FW_Update.Text = "Update ALL FW";
+            this.btn_FW_Update.Text = "Batch update all FW";
             this.btn_FW_Update.UseVisualStyleBackColor = false;
             this.btn_FW_Update.Click += new System.EventHandler(this.btn_FW_Batch_Update_Click);
             // 
@@ -89,7 +90,7 @@ namespace HDriveDiscovery
             this.btn_upload_webpage.Name = "btn_upload_webpage";
             this.btn_upload_webpage.Size = new System.Drawing.Size(180, 43);
             this.btn_upload_webpage.TabIndex = 8;
-            this.btn_upload_webpage.Text = "Update ALL GUIs";
+            this.btn_upload_webpage.Text = "Batch update all GUIs";
             this.btn_upload_webpage.UseVisualStyleBackColor = false;
             this.btn_upload_webpage.Click += new System.EventHandler(this.btn_Webpage_Batch_Upload_Click);
             // 
@@ -148,11 +149,23 @@ namespace HDriveDiscovery
             this.btn_refreshHDriveData.UseVisualStyleBackColor = true;
             this.btn_refreshHDriveData.Click += new System.EventHandler(this.btn_detectHDrives);
             // 
+            // onlyShow102
+            // 
+            this.onlyShow102.AutoSize = true;
+            this.onlyShow102.Location = new System.Drawing.Point(1404, 14);
+            this.onlyShow102.Name = "onlyShow102";
+            this.onlyShow102.Size = new System.Drawing.Size(115, 24);
+            this.onlyShow102.TabIndex = 17;
+            this.onlyShow102.Text = "sort to .102";
+            this.onlyShow102.UseVisualStyleBackColor = true;
+            this.onlyShow102.CheckedChanged += new System.EventHandler(this.onlyShow102_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1531, 1236);
+            this.Controls.Add(this.onlyShow102);
             this.Controls.Add(this.btn_refreshHDriveData);
             this.Controls.Add(this.btn_clearLog);
             this.Controls.Add(this.debugConsole);
@@ -162,7 +175,7 @@ namespace HDriveDiscovery
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.btn_refresh);
             this.Name = "Form1";
-            this.Text = "HDrive Discovery 0.6";
+            this.Text = "HDrive Discovery 0.6.1";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -183,6 +196,7 @@ namespace HDriveDiscovery
         private System.Windows.Forms.TextBox debugConsole;
         private System.Windows.Forms.Button btn_clearLog;
         private System.Windows.Forms.Button btn_refreshHDriveData;
+        private System.Windows.Forms.CheckBox onlyShow102;
     }
 }
 
