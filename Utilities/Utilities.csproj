@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="NetworkTools.cs" />
     <Compile Include="PingSweep.cs" />
-    <Compile Include="Vector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

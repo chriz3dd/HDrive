@@ -9,7 +9,7 @@ namespace Utilities
     {
         //https://stackoverflow.com/questions/12802888/get-a-machines-mac-address-on-the-local-network-from-its-ip-in-c-sharp
 
-       static public string getMacByIp(string ip)
+        public static string getMacByIp(string ip)
         {
             var macIpPairs = GetAllMacAddressesAndIppairs();
             int index = macIpPairs.FindIndex(x => x.IpAddress == ip);
@@ -17,13 +17,11 @@ namespace Utilities
             {
                 return macIpPairs[index].MacAddress.ToUpper();
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
-        static public List<MacIpPair> GetAllMacAddressesAndIppairs()
+        public static List<MacIpPair> GetAllMacAddressesAndIppairs()
         {
             List<MacIpPair> mip = new List<MacIpPair>();
             System.Diagnostics.Process pProcess = new System.Diagnostics.Process();

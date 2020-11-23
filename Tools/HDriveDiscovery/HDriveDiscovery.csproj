@@ -116,7 +116,7 @@
       <Name>HDrive_CSharp_Driver</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utilities\Utilities.csproj">
-      <Project>{73E86D37-7149-4412-9DA0-C78FB0601FDB}</Project>
+      <Project>{73e86d37-7149-4412-9da0-c78fb0601fdb}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
