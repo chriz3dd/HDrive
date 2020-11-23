@@ -152,11 +152,11 @@ namespace HDriveDiscovery
             // onlyShow102
             // 
             this.onlyShow102.AutoSize = true;
-            this.onlyShow102.Location = new System.Drawing.Point(1404, 14);
+            this.onlyShow102.Location = new System.Drawing.Point(1379, 12);
             this.onlyShow102.Name = "onlyShow102";
-            this.onlyShow102.Size = new System.Drawing.Size(115, 24);
+            this.onlyShow102.Size = new System.Drawing.Size(139, 24);
             this.onlyShow102.TabIndex = 17;
-            this.onlyShow102.Text = "sort to .102";
+            this.onlyShow102.Text = "show .102 only";
             this.onlyShow102.UseVisualStyleBackColor = true;
             this.onlyShow102.CheckedChanged += new System.EventHandler(this.onlyShow102_CheckedChanged);
             // 
